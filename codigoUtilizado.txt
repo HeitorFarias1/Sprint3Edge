@@ -1,0 +1,76 @@
+#include <ArduinoJson.h>
+
+#define trigPin 10
+#define echoPin 9
+
+int counter;
+float duration;
+float transito;
+unsigned long time;
+
+
+void setup() 
+{
+  Serial.begin(9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+}
+
+void loop() 
+{
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = 0;
+  counter = 0;
+  while (--counter != 0) 
+  {
+    if (PINB & 2) 
+    {
+      time = micros();
+      break;
+    }
+  }
+  while (--counter != 0) 
+  {
+    if ((PINB & 2) == 0) 
+    {
+      duration = micros() - time;
+      break;
+    }
+  }
+  
+  
+  transito = (duration / 2) * 0.0344;
+
+  StaticJsonDocument<100> json; // Tamanho do buffer para o JSON
+
+  if (transito <= 170) 
+  {
+    json["transito"] = "Transito Intenso";
+    
+    
+    
+  } 
+  else if (transito > 170  && transito < 350) 
+  {
+    json["transito"] = "Transito Moderado";
+    
+  } 
+  else 
+  {
+    json["transito"] = "Sem Transito";
+    
+  }
+
+  String jsonString;
+  serializeJson(json, jsonString);
+  
+  Serial.println(jsonString); // Envia o JSON via serial
+
+  delay(5000);
+}

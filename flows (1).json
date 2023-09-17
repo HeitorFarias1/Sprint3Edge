@@ -1,0 +1,22 @@
+[
+    {
+        "id": "b70af451e47b0fbe",
+        "type": "function",
+        "z": "7978db66f76ef26f",
+        "name": "Semaforo de Carros",
+        "func": "var transito = msg.payload.transito;\n\nif (transito === \"Transito Intenso\") {\n    msg.payload = {\n        \"Semaforo de Carros\":\"\",\n        \"Transito\": \"Intenso\",\n        \"Tempo do verde\": \"5000\",\n        \"Tempo do amarelo\": \"1000\",\n        \"Tempo do vermelho\": \"4000\",\n        \"Semaforo de Pedestres\":\"\",\n        \"Tempo Vermelho\": \"5000\",\n        \"Tempo Verde\": \"3000\",\n    };\n} \nelse if (transito === \"Transito Moderado\") {\n    msg.payload = {\n        \"Semaforo de Carros\":\"\",\n        \"Transito\": \"Moderado\",\n        \"Tempo do verde\": \"4000\",\n        \"Tempo do amarelo\": \"1000\",\n        \"Tempo do vermelho\": \"4000\",\n        \"Semaforo de Pedestres\":\"\",\n        \"Tempo Vermelho\": \"4000\",\n        \"Tempo Verde\": \"4000\",\n    };\n} \nelse {\n    msg.payload = {\n        \"Semaforo de Carros\":\"\",\n        \"Transito\": \"Sem Transito\",\n        \"Tempo do verde\": \"3000\",\n        \"Tempo do amarelo\": \"1000\",\n        \"Tempo do vermelho\": \"5000\",\n        \"Semaforo de Pedestres\":\"\",\n        \"Tempo Vermelho\": \"3000\",\n        \"Tempo Verde\": \"5000\",\n    };\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 260,
+        "wires": [
+            [
+                "b9474ebf7878107d"
+            ]
+        ]
+    }
+]
